@@ -2,7 +2,7 @@ module FlexiGroups
 
 using Dictionaries
 using Combinatorics: combinations
-using FlexiMaps: flatten, mapview, _eltype, Accessors
+using FlexiMaps: FlexiMaps, flatten, mapview, _eltype, Accessors
 using DataPipes
 using AccessorsExtra  # for values()
 
