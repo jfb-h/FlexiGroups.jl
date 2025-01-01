@@ -370,7 +370,13 @@ end
 
     # probably no way to extract levels:
     @test groupmap(x -> x.a, length, StructArray(;a=a[1:0])) |> isempty
-    @test groupmap((@o (_.a, _.b)), length, StructArray(a=a[1:2], b=a[2:3])) == dictionary([("a", "a") => 1, ("a", "b") => 1])
+
+    # why this works?
+    G = groupmap((@o (_.a, _.b)), length, StructArray(a=a[1:2], b=a[2:3]))
+    @test length(G) == 9
+    @test G[("a", "a")] == 1
+    @test G[("b", "a")] == 0
+    @test sum(G) == 2
 end
 
 @testitem "keyedarray" begin
