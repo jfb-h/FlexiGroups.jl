@@ -138,14 +138,13 @@ end
 
     gr = first(g)
     @test gr == gr
-    @test_broken gr != [(x = 3,), (x = 9,), (x = 15,)]
     @test gr == Group(true, [(x = 3,), (x = 9,), (x = 15,)])
     @test gr != Group(true, [(x = 3,), (x = 9,), (x = 10,)])
     @test gr != Group(false, [(x = 3,), (x = 9,), (x = 15,)])
     @test length(gr) == 3
     @test gr[2] == (x=9,)
     @test gr.x == [3, 9, 15]
-    @test_broken map(identity, gr).x == [3, 9, 15]
+    @test map(identity, gr).x == [3, 9, 15]
     @test modify(reverse, gr, values) == Group(true, [(x=15,), (x=9,), (x=3,)])
     @test @modify(reverse, g |> Elements() |> values)[1] == Group(true, [(x=15,), (x=9,), (x=3,)])
 

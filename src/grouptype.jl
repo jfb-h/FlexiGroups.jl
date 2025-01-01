@@ -23,6 +23,11 @@ Accessors.set(g::Group, ::typeof(value), v) = Group(key(g), v)
 Accessors.set(g::Group, ::typeof(values), v::AbstractArray) = Group(key(g), v)
 Accessors.modify(f, obj::Group, ::GroupValue) = modify(f, obj, value)
 
+Base.similar(A::GroupArray) = similar(values(A))
+Base.similar(A::GroupArray, ::Type{T}) where {T} = similar(values(A), T)
+Base.similar(A::GroupArray, dims) = similar(values(A), dims)
+Base.similar(A::GroupArray, ::Type{T}, dims::Tuple{Union{Integer, Base.OneTo}, Vararg{Union{Integer, Base.OneTo}}}) where {T} = similar(values(A), T, dims)
+
 Base.size(g::GroupArray) = size(value(g))
 Base.getindex(g::GroupArray, i...) = getindex(value(g), i...)
 Base.getproperty(g::Group, p) = getproperty(value(g), p)
