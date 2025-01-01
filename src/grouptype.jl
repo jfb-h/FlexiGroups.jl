@@ -25,13 +25,20 @@ Accessors.modify(f, obj::Group, ::GroupValue) = modify(f, obj, value)
 
 Base.similar(A::GroupArray) = similar(values(A))
 Base.similar(A::GroupArray, ::Type{T}) where {T} = similar(values(A), T)
-Base.similar(A::GroupArray, dims) = similar(values(A), dims)
+Base.similar(A::GroupArray, dims::Tuple) = similar(values(A), dims)
 Base.similar(A::GroupArray, ::Type{T}, dims::Tuple{Union{Integer, Base.OneTo}, Vararg{Union{Integer, Base.OneTo}}}) where {T} = similar(values(A), T, dims)
+Base.similar(A::GroupArray, ::Type{T}, dims::Tuple{Vararg{Int, N}}) where {T, N} = similar(values(A), T, dims)  # disambiguation
 
-Base.size(g::GroupArray) = size(value(g))
-Base.getindex(g::GroupArray, i...) = getindex(value(g), i...)
+Base.length(g::Group) = length(value(g))
+Base.size(g::Group) = size(value(g))
+Base.keys(g::Group) = keys(value(g))
+Base.first(g::Group) = first(value(g))
+Base.lastindex(g::Group) = lastindex(value(g))
+Base.getindex(g::Group, i...) = getindex(value(g), i...)
 Base.getproperty(g::Group, p) = getproperty(value(g), p)
 Base.getproperty(g::Group, p::Symbol) = getproperty(value(g), p)  # disambiguate
+Base.map(f, g::Group) = map(f, value(g))
+Base.mapreduce(f, op, itr::Group) = mapreduce(f, op, value(itr))
 
 Base.:(==)(a::Group, b::Group) = key(a) == key(b) && value(a) == value(b)
 Base.:(==)(a::Group, b::AbstractArray) = error("Cannot compare Group with $(typeof(b))")

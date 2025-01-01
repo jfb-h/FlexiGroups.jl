@@ -124,7 +124,27 @@ end
     @test g == OffsetArray([[2], [1, 1, 1, 3]], 0:1)
 end
 
-@testitem "Groups" begin
+@testitem "Group type" begin
+    ga = Group(123, [1, 2, 3])
+    @test ga isa AbstractVector
+    @test length(ga) == 3
+    @test ga[1] == 1
+    @test last(ga) == 3
+    @test sum(ga) == 6
+    @test size(similar(ga, String, (2, 3))::Matrix{String}) == (2, 3)
+    @test map(x->x+1, ga)::Vector{Int} == [2, 3, 4]
+
+    gt = Group(123, (10, 20))
+    @test length(gt) == 2
+    @test gt[1] == 10
+    @test first(gt) == 10
+    @test last(gt) == 20
+    @test last(gt, 2) == [10, 20]
+    @test sum(gt) == 30
+    @test map(x->x+1, gt)::NTuple{2, Int} == (11, 21)
+end
+
+@testitem "grouping to Groups" begin
     using Accessors
     using StructArrays
 
