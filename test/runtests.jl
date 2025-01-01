@@ -338,11 +338,11 @@ end
 
     xs = StructArray(
         a=3 .* [1, 2, 3, 4, 5],
-        b=mapview(_ -> error("Shouldn't happen"), 1:5)
+        b=Vector{Any}(undef, 5)
     )
-    @test_throws "Shouldn't happen" groupmap(x -> isodd(x.a), length, xs)
+    @test_throws "access to undefined reference" groupmap(x -> isodd(x.a), length, xs)
     @test groupmap((@optic isodd(_.a)), length, xs)[true] == 3
-    @test_throws "Shouldn't happen" length(group((@optic isodd(_.a)), xs)[true])
+    @test_throws "access to undefined reference" length(group((@optic isodd(_.a)), xs)[true])
     @test groupview((@optic isodd(_.a)), xs)[true].a == [3, 9, 15]
 end
 
