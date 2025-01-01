@@ -144,9 +144,11 @@ end
     @test length(gr) == 3
     @test gr[2] == (x=9,)
     @test gr.x == [3, 9, 15]
-    @test map(identity, gr).x == [3, 9, 15]
+    @test (map(identity, gr)::StructArray).x == [3, 9, 15]
     @test modify(reverse, gr, values) == Group(true, [(x=15,), (x=9,), (x=3,)])
+    @test modify(length, gr, value) == Group(true, 3)
     @test @modify(reverse, g |> Elements() |> values)[1] == Group(true, [(x=15,), (x=9,), (x=3,)])
+    @test (@set key(gr) = 1.23) == Group(1.23, [(x=3,), (x=9,), (x=15,)])
 
     xs = 3 .* [1, 2, 3, 4, 5]
     g = @inferred group_vg(x->isodd(x) ? 1 : 0, xs)
