@@ -25,13 +25,13 @@ StructArraysExt = "StructArrays"
 [compat]
 AccessorsExtra = "0.1.67"
 AxisKeys = "0.2.12"
-CategoricalArrays = "0.10"
+CategoricalArrays = "0.10, 1.0"
 Combinatorics = "1.0.2"
 DataPipes = "0.3.0"
 Dictionaries = "0.3.24, 0.4"
 FlexiMaps = "0.1.23"
 OffsetArrays = "1.12.7"
-StructArrays = "0.6, 0.7.1"
+StructArrays = "0.6, 0.7"
 julia = "1.6"
 
 [extras]
